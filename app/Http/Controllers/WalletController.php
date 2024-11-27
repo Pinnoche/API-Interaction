@@ -8,6 +8,92 @@ use Illuminate\Http\Request;
 
 class WalletController extends Controller
 {
+
+    /**
+     * @OA\Get(
+     *     path="/wallet/balance",
+     *     operationId="getWalletBalance",
+     *     tags={"Wallet"},
+     *     summary="Fetch wallet balance for the authenticated user",
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="balance", type="number", example=100.00)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     )
+     * )
+     */
+    /**
+ * @OA\Get(
+ *     path="/wallet/balance",
+ *     operationId="getWalletBalance",
+ *     tags={"Wallet"},
+ *     summary="Fetch wallet balance for the authenticated user",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful response",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="balance", type="number", example=250.75)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthorized",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="Unauthorized")
+ *         )
+ *     )
+ * )
+ */
+
+ /**
+ * @OA\Post(
+ *     path="/wallet/transfer",
+ *     operationId="transferFunds",
+ *     tags={"Wallet"},
+ *     summary="Transfer funds to another user",
+ *     security={{"bearerAuth": {}}},
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             @OA\Property(property="recipient_id", type="integer", example=2),
+ *             @OA\Property(property="amount", type="number", example=50.00)
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful transfer",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="message", type="string", example="Transfer successful")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Insufficient funds",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="Insufficient funds")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=401,
+ *         description="Unauthorized",
+ *         @OA\JsonContent(
+ *             @OA\Property(property="error", type="string", example="Unauthorized")
+ *         )
+ *     )
+ * )
+ */
+
     public function store(Request $request)
     {
         $user = auth()->user();

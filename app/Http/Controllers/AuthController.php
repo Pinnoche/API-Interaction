@@ -9,30 +9,61 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
+
+/**
+ * @OA\Info(
+ *     title="Mini Global API Center",
+ *     version="1.0.0",
+ *     description="API documentation for MGAC"
+ * )
+ *
+ * @OA\Server(
+ *     url=L5_SWAGGER_CONST_HOST,
+ *     description="Development Server"
+ * )
+ */
+
 class AuthController extends Controller
 {
-    // public function register(Request $request)
-    // {
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|string|email|max:255|unique:users',
-    //         'password' => 'required|string|min:8',
-    //     ]);
 
-    //     $user = User::create([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => Hash::make($request->password),
-    //     ]);
-
-    //     $token = $user->createToken('Personal Access Token')->accessToken;
-
-    //     return response()->json([
-    //         'token' => $token,
-    //         'data' => $user
-    //     ], 201);
-    // }
-
+    /**
+     * @OA\Post(
+     *     path="/login",
+     *     operationId="userLogin",
+     *     tags={"Authentication"},
+     *     summary="Log in a user and get a token",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", example="user@example.com"),
+     *             @OA\Property(property="password", type="string", example="password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful login",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGci...")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="error", type="string", example="Unauthorized")
+     *         )
+     *     )
+     * )
+     */
+    /**
+     * @OA\SecurityScheme(
+     *     securityScheme="bearerAuth",
+     *     type="http",
+     *     scheme="bearer",
+     *     bearerFormat="JWT",
+     *     description="Enter the token provided after login"
+     * )
+     */
     public function login(Request $request)
     {
         $request->validate([
