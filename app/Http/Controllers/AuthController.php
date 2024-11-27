@@ -11,27 +11,27 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
+    // public function register(Request $request)
+    // {
+    //     $request->validate([
+    //         'name' => 'required|string|max:255',
+    //         'email' => 'required|string|email|max:255|unique:users',
+    //         'password' => 'required|string|min:8',
+    //     ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    //     $user = User::create([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //     ]);
 
-        $token = $user->createToken('Personal Access Token')->accessToken;
+    //     $token = $user->createToken('Personal Access Token')->accessToken;
 
-        return response()->json([
-            'token' => $token,
-            'data' => $user
-        ], 201);
-    }
+    //     return response()->json([
+    //         'token' => $token,
+    //         'data' => $user
+    //     ], 201);
+    // }
 
     public function login(Request $request)
     {
@@ -66,11 +66,5 @@ class AuthController extends Controller
         $newToken = $user->createToken('Personal Access Token')->accessToken;
 
         return response()->json(['token' => $newToken], 200);
-    }
-    public function logout()
-    {
-        Auth::user()->token()->revoke();
-
-        return response()->json(['message' => 'Successfully logged out']);
     }
 }
